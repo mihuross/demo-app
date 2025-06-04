@@ -4,6 +4,8 @@ metadata:
   name: demo-app-prod-eu2
   finalizers:
     - resources-finalizer.argocd.argoproj.io/foreground
+  annotations:
+    codefresh.io/product: demo-product
 spec:
   project: default
   destination:
