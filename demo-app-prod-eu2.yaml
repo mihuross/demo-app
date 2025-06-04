@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app-prod-eu2
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io/foreground
+spec:
+  project: default
+  destination:
+    name: in-cluster
+    namespace: prod-eu2
+  source:
+    path: prod-eu2
+    repoURL: https://github.com/mihuross/demo-app.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+      allowEmpty: false
+    syncOptions:
+      - PrunePropagationPolicy=foreground
+      - Replace=false
+      - PruneLast=false
+      - Validate=true
+      - CreateNamespace=false
+      - ApplyOutOfSyncOnly=false
+      - ServerSideApply=true
+      - RespectIgnoreDifferences=false
